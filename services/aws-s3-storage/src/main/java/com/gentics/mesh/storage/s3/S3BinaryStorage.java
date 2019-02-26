@@ -180,8 +180,8 @@ public class S3BinaryStorage extends AbstractBinaryStorage {
 	public Completable moveInPlace(String uuid, String temporaryId) {
 		CopyObjectRequest copyRequest = CopyObjectRequest.builder()
 			.bucket(bucketName)
-			.key(uuid)
 			.copySource(bucketName + "/" + temporaryId)
+			.key(uuid)
 			.build();
 
 		Completable copy = CompletableInterop.fromFuture(client.copyObject(copyRequest))
@@ -193,6 +193,7 @@ public class S3BinaryStorage extends AbstractBinaryStorage {
 			.bucket(bucketName)
 			.key(temporaryId)
 			.build();
+
 		Completable delete = CompletableInterop.fromFuture(client.deleteObject(deleObjectRequest))
 			.doOnError(e -> {
 				log.error("Error while deleting temporary file {}", temporaryId, e);
@@ -202,6 +203,13 @@ public class S3BinaryStorage extends AbstractBinaryStorage {
 
 	@Override
 	public Completable purgeTemporaryUpload(String temporaryId) {
-		return Completable.complete();
+		DeleteObjectRequest deleObjectRequest = DeleteObjectRequest.builder()
+			.bucket(bucketName)
+			.key(temporaryId)
+			.build();
+		return CompletableInterop.fromFuture(client.deleteObject(deleObjectRequest))
+			.doOnError(e -> {
+				log.error("Error while deleting temporary upload {}", temporaryId, e);
+			});
 	}
 }
