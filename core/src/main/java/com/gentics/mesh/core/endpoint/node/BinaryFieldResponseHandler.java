@@ -23,6 +23,7 @@ import com.gentics.mesh.util.ETag;
 import com.gentics.mesh.util.RxUtil;
 
 import io.reactivex.Flowable;
+import io.reactivex.Single;
 import io.vertx.core.buffer.Buffer;
 import io.vertx.core.http.HttpHeaders;
 import io.vertx.core.http.HttpServerResponse;
@@ -52,7 +53,7 @@ public class BinaryFieldResponseHandler {
 	 * @param binaryField
 	 */
 	public void handle(RoutingContext rc, BinaryGraphField binaryField) {
-		if (!storage.exists(binaryField)) {
+		if (!storage.exists(binaryField).blockingGet()) {
 			rc.fail(error(NOT_FOUND, "node_error_binary_data_not_found"));
 			return;
 		} else {
