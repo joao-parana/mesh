@@ -27,8 +27,9 @@ public interface BinaryFieldTestHelper {
 	final DataProvider FILL_BASIC = (container, name) -> {
 		Buffer buffer = Buffer.buffer(FILECONTENTS);
 		String sha512Sum = FileUtils.hash(buffer).blockingGet();
-		Binary binary = MeshInternal.get().boot().binaryRoot().create(sha512Sum, Long.valueOf(buffer.length()));
-		MeshInternal.get().binaryStorage().store(Flowable.just(buffer), binary.getUuid()).blockingAwait();
+		long size = Long.valueOf(buffer.length());
+		Binary binary = MeshInternal.get().boot().binaryRoot().create(sha512Sum, size);
+		MeshInternal.get().binaryStorage().store(Flowable.just(buffer), size, binary.getUuid()).blockingAwait();
 		BinaryGraphField field = container.createBinary(name, binary);
 		field.setFileName(FILENAME);
 		field.setMimeType(MIMETYPE);
