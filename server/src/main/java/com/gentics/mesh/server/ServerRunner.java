@@ -40,7 +40,7 @@ public class ServerRunner {
 		// options.getClusterOptions().setClusterName("test");
 		// options.setNodeName("node1");
 		// options.getClusterOptions().setEnabled(true);
-		 options.getSearchOptions().setUrl(null);
+		 //options.getSearchOptions().setUrl(null);
 		 options.getSearchOptions().setStartEmbedded(false);
 
 		Mesh mesh = Mesh.mesh(options);
