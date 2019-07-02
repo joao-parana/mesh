@@ -23,6 +23,11 @@ include::content/docs/variables.adoc-include[]
 
 * The support for the embedded Elasticsearch will be dropped in the future. It is highly recommended to link:{{< relref "elasticsearch.asciidoc" >}}#_dedicated_elasticsearch[setup Elasticsearch as a dedicated service].
 
+[[v0.37.0]]
+== 0.37.0 (TBD)
+
+icon:plus[] Search: A new search option `search.defaultFieldMappings` has been added. When disabled no default field mappings and fields will be added to the search index. Only those fields which specify a custom elasticsearch mapping will be added to the index. This is useful if you want to have finer control of what contents should be added to Elasticsearch. The setting is enabled by default. This way this change will not affect existing setups.
+
 [[v0.36.2]]
 == 0.36.2 (TBD)
 

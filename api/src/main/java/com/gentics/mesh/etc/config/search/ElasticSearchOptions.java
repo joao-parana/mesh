@@ -28,6 +28,7 @@ public class ElasticSearchOptions implements Option {
 	public static final int DEFAULT_IDLE_DEBOUNCE_TIME = 100;
 	public static final int DEFAULT_RETRY_INTERVAL = 5000;
 	public static final boolean DEFAULT_WAIT_FOR_IDLE = true;
+	public static final boolean DEFAULT_FIELD_MAPPINGS = true;
 
 	public static final String DEFAULT_PREFIX = "mesh-";
 
@@ -51,6 +52,7 @@ public class ElasticSearchOptions implements Option {
 	public static final String MESH_ELASTICSEARCH_IDLE_DEBOUNCE_TIME_ENV = "MESH_ELASTICSEARCH_IDLE_DEBOUNCE_TIME";
 	public static final String MESH_ELASTICSEARCH_RETRY_INTERVAL_ENV = "MESH_ELASTICSEARCH_RETRY_INTERVAL";
 	public static final String MESH_ELASTICSEARCH_WAIT_FOR_IDLE_ENV = "MESH_ELASTICSEARCH_WAIT_FOR_IDLE";
+	public static final String MESH_ELASTICSEARCH_DEFAULT_FIELD_MAPPINGS_ENV = "MESH_ELASTICSEARCH_DEFAULT_FIELD_MAPPINGS";
 	public static final String MESH_ELASTICSEARCH_HOSTNAME_VERIFICATION_ENV = "MESH_ELASTICSEARCH_HOSTNAME_VERIFICATION";
 
 	@JsonProperty(required = false)
@@ -142,6 +144,12 @@ public class ElasticSearchOptions implements Option {
 		+ DEFAULT_WAIT_FOR_IDLE)
 	@EnvironmentVariable(name = MESH_ELASTICSEARCH_WAIT_FOR_IDLE_ENV, description = "Override the search idle wait flag.")
 	private boolean waitForIdle = DEFAULT_WAIT_FOR_IDLE;
+
+	@JsonProperty(required = false)
+	@JsonPropertyDescription("If false, no default mappings will be created for node fields without a custom elasticsearch mapping. Default: "
+		+ DEFAULT_FIELD_MAPPINGS)
+	@EnvironmentVariable(name = MESH_ELASTICSEARCH_DEFAULT_FIELD_MAPPINGS_ENV, description = "Override the search default field mappings flag.")
+	private boolean defaultFieldMappings = DEFAULT_FIELD_MAPPINGS;
 
 	public ElasticSearchOptions() {
 
@@ -330,6 +338,15 @@ public class ElasticSearchOptions implements Option {
 
 	public ElasticSearchOptions setWaitForIdle(boolean waitForIdle) {
 		this.waitForIdle = waitForIdle;
+		return this;
+	}
+
+	public boolean isDefaultFieldMappings() {
+		return defaultFieldMappings;
+	}
+
+	public ElasticSearchOptions setDefaultFieldMappings(boolean defaultFieldMappings) {
+		this.defaultFieldMappings = defaultFieldMappings;
 		return this;
 	}
 

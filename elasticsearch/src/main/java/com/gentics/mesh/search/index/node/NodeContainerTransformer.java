@@ -51,6 +51,7 @@ import com.gentics.mesh.core.rest.node.field.binary.BinaryMetadata;
 import com.gentics.mesh.core.rest.node.field.binary.Location;
 import com.gentics.mesh.core.rest.schema.FieldSchema;
 import com.gentics.mesh.core.rest.schema.impl.ListFieldSchemaImpl;
+import com.gentics.mesh.etc.config.MeshOptions;
 import com.gentics.mesh.search.index.AbstractTransformer;
 import com.gentics.mesh.util.ETag;
 
@@ -71,8 +72,11 @@ public class NodeContainerTransformer extends AbstractTransformer<NodeGraphField
 
 	private static final String VERSION_KEY = "version";
 
+	private final MeshOptions options;
+
 	@Inject
-	public NodeContainerTransformer() {
+	public NodeContainerTransformer(MeshOptions options) {
+		this.options = options;
 	}
 
 	/**
@@ -146,6 +150,10 @@ public class NodeContainerTransformer extends AbstractTransformer<NodeGraphField
 	public void addFields(JsonObject document, String fieldKey, GraphFieldContainer container, List<? extends FieldSchema> fields) {
 		Map<String, Object> fieldsMap = new HashMap<>();
 		for (FieldSchema fieldSchema : fields) {
+			// Check whether the field is needed
+			if (!fieldSchema.isMappingRequired(options.getSearchOptions())) {
+				continue;
+			}
 			String name = fieldSchema.getName();
 			FieldTypes type = FieldTypes.valueByName(fieldSchema.getType());
 			JsonObject customIndexOptions = fieldSchema.getElasticsearch();
