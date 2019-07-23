@@ -334,13 +334,13 @@ public class OrientDBDatabase extends AbstractDatabase {
 				if (log.isTraceEnabled()) {
 					log.trace("Error while handling transaction. Retrying " + retry, e);
 				}
-				int rnd = (int) (Math.random() * 6000.0);
-				try {
-					// Increase the delay for each retry by 25ms to give the other transaction a chance to finish
-					Thread.sleep(50 + (retry * 25) + rnd);
-				} catch (InterruptedException e1) {
-					e1.printStackTrace();
-				}
+//				int rnd = (int) (Math.random() * 6000.0);
+//				try {
+//					// Increase the delay for each retry by 25ms to give the other transaction a chance to finish
+//					Thread.sleep(50 + (retry * 25) + rnd);
+//				} catch (InterruptedException e1) {
+//					e1.printStackTrace();
+//				}
 				// Reset previous result
 				handlerFinished = false;
 				handlerResult = null;
