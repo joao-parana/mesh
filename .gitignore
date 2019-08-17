@@ -1,5 +1,7 @@
 .DS_Store
 target
+databases/orientdb/data/
+madl/api/src/main/kotlin/
 .classpath
 .project
 /build.sh
