@@ -7,6 +7,8 @@
 
 # [Gentics Mesh](https://getmesh.io)
 
+> Use something like  `export JAVA_1_11_HOME=/Library/Java/JavaVirtualMachines/jdk-11.0.1.jdk/Contents/Home` to bypass error on **madl-api**
+
 Gentics Mesh is an Open Source API-first CMS for developers. All contents can be stored/updated and retrieved using the [REST API](https://getmesh.io/docs/beta/raml/).
 
 ## Setup / Installation
